@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUXILIO BY @Gringozin ff</title>
+<style>
+body {margin:0;padding:0;font-family:Arial,sans-serif;background:#0a0a0f;color:#fff;}
+#particles-js {position:absolute;width:100%;height:100%;z-index:0;}
+.painel,.login-box{position:relative;z-index:1;background:#1a1a1f;width:320px;margin:80px auto;padding:20px;border-radius:12px;text-align:center;box-shadow:0 0 15px #000;}
+.painel{display:none;}
+h2{margin-bottom:15px;font-size:16px;}
+.tabs{display:flex;justify-content:space-between;margin-bottom:10px;}
+.tab-button{flex:1;padding:10px;background:#333;color:white;border:none;cursor:pointer;user-select:none;}
+.tab-button.active{background:#555;}
+.tab-content{display:none;text-align:left;}
+.tab-content.active{display:block;}
+.checkbox-label{display:flex;align-items:center;margin:8px 0;}
+.checkbox-label input[type=checkbox]{appearance:none;width:20px;height:20px;background:#444;border-radius:4px;border:2px solid #888;margin-right:10px;cursor:pointer;}
+.checkbox-label input[type=checkbox]:checked{background:#888;}
+.precisao-container{display:flex;justify-content:space-between;align-items:center;margin-top:15px;}
+input[type=range]{width:100%;cursor:pointer;}
+select{margin-top:10px;width:100%;padding:8px;background:#2a2a2f;color:#fff;border:1px solid #555;border-radius:5px;cursor:pointer;}
+.aimbot-options{display:flex;justify-content:space-between;margin-top:15px;}
+.radio-label{display:flex;align-items:center;cursor:pointer;}
+input[type="radio"]{appearance:none;background-color:#444;border:2px solid #888;border-radius:50%;width:18px;height:18px;margin-right:6px;position:relative;cursor:pointer;}
+input[type="radio"]:checked::before{content:"";position:absolute;top:3px;left:3px;width:8px;height:8px;border-radius:50%;background:#ccc;}
+.inject-btn,.login-btn{margin-top:20px;padding:10px;width:100%;background-color:#202020;color:white;border:2px solid white;border-radius:5px;cursor:pointer;user-select:none;transition:background-color 0.2s ease;}
+.inject-btn:hover,.login-btn:hover{background-color:#444;}
+.profile-pic{width:120px;height:120px;border-radius:50%;object-fit:cover;margin-bottom:10px;border:2px solid #555;}
+.login-input{width:100%;padding:10px;margin-top:10px;border-radius:5px;border:2px solid #444;background:#101015;color:white;font-size:16px;text-align:center;outline-offset:0;outline-color:transparent;transition:border-color 0.3s ease;}
+.login-input:focus{border-color:#888;outline-color:#888;}
+.social-links a{display:block;margin-top:10px;background:#2a2a2f;padding:10px;border-radius:5px;text-decoration:none;color:white;user-select:none;transition:background-color 0.3s ease;}
+.social-links a:hover{background:#3a3a3f;}
+#color-picker{margin-top:10px;}
+#preview{width:40px;height:40px;margin-top:10px;border:2px solid #fff;border-radius:5px;}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<!-- LOGIN -->
+<div class="login-box" id="loginBox">
+<img src="https://files.fm/f/7nu5h4sqv6" alt="Foto de perfil" class="profile-pic">
+<h2>Login com Key</h2>
+<input type="password" id="password" class="login-input" placeholder="Digite sua key de acesso" autocomplete="off">
+<button class="login-btn" onclick="validarLogin()">Entrar</button>
+<div class="social-links">
+<a href="https://www.tiktok.com/@gringozinnnff" target="_blank">TikTok Oficial</a>
+</div>
+</div>
+
+<!-- PAINEL -->
+<div class="painel" id="painel">
+<h2>AUXILIO BY @Gringozin ff</h2>
+<div class="tabs">
+<button class="tab-button active" onclick="openTab(event,'aimbot')">Aimbot</button>
+<button class="tab-button" onclick="openTab(event,'info')">Info</button>
+<button class="tab-button" onclick="openTab(event,'misc')">MISC</button>
+</div>
+
+<div id="aimbot" class="tab-content active">
+<label class="checkbox-label"><input type="checkbox" id="auxilioCheckbox"> Ativar Auxílio</label>
+<label class="checkbox-label"><input type="checkbox" id="precisaoCheckbox"> Ativar Precisão</label>
+
+<div class="precisao-container">
+<input type="range" id="precisaoRange" min="0" max="100" value="10" oninput="document.getElementById('precisaoValue').innerText=this.value">
+<span style="margin-left:10px;">Precisão <span id="precisaoValue">10</span></span>
+</div>
+
+<select>
+<option>Auxilio Head</option>
+<option>Auxilio Recoil</option>
+<option>Auxilio Sensi</option>
+<option>ESP linha</option>
+</select>
+
+<p style="margin-top:20px;">Tipo de Aimbot:</p>
+<div class="aimbot-options">
+<label class="radio-label"><input type="radio" name="tipo">Ao Atirar</label>
+<label class="radio-label"><input type="radio" name="tipo">Ao Olhar</label>
+</div>
+
+<button class="inject-btn" onclick="redirecionarParaJogo()">INJETAR FUNÇÕES NO JOGO</button>
+</div>
+
+<div id="info" class="tab-content">
+<p>Painel criado por DEV (@Gringozin_ff).</p>
+<p>Versão 2.114.X.</p>
+<p><strong>Tempo restante da Key:</strong></p>
+<p id="tempoRestante" style="font-size:18px;color:#0f0;">Carregando...</p>
+</div>
+
+<div id="misc" class="tab-content">
+<p>Mudar cor do painel:</p>
+<div id="color-picker"></div>
+<div id="preview"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+<script>
+// Key e link do jogo
+const keyList = { "Gringozin": 7 };
+const linkDoJogo = "intent://#Intent;scheme=freefire;package=com.dts.freefireth;end";
+
+function redirecionarParaJogo(){ window.open(linkDoJogo,"_blank"); }
+
+// Login e Key
+window.onload = () => {
+  const savedKey = localStorage.getItem("key_ativa");
+  const expires = localStorage.getItem("key_expira_em");
+  if(savedKey && expires && Date.now()<parseInt(expires)){
+    mostrarPainel();
+  } else if(savedKey && keyList[savedKey]){
+    const dias = keyList[savedKey];
+    const novaExpiracao = Date.now()+dias*24*60*60*1000;
+    localStorage.setItem("key_expira_em", novaExpiracao);
+    mostrarPainel();
+  } else {
+    limparKey();
+  }
+
+  setInterval(()=>{
+    const expira = localStorage.getItem("key_expira_em");
+    if(expira && Date.now()>parseInt(expira)){
+      alert("Sua key expirou.");
+      limparKey();
+    }
+  },60000);
+
+  setInterval(atualizarContagem,1000);
+  atualizarContagem();
+};
+
+function validarLogin(){
+  const senha=document.getElementById("password").value.trim();
+  if(keyList[senha]){
+    const dias=keyList[senha];
+    const dataExpira=Date.now()+dias*24*60*60*1000;
+    localStorage.setItem("key_ativa",senha);
+    localStorage.setItem("key_expira_em",dataExpira);
+    mostrarPainel();
+  }else{ alert("Key inválida ou expirada."); }
+}
+
+function mostrarPainel(){ document.getElementById("loginBox").style.display="none"; document.getElementById("painel").style.display="block"; }
+function limparKey(){ localStorage.removeItem("key_ativa"); localStorage.removeItem("key_expira_em"); document.getElementById("painel").style.display="none"; document.getElementById("loginBox").style.display="block"; document.getElementById("password").value=""; }
+
+function openTab(evt, tabId){
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-button').forEach(el=>el.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+
+function atualizarContagem(){
+  const expira=localStorage.getItem("key_expira_em");
+  const tempoRestante=document.getElementById("tempoRestante");
+  if(!expira || !tempoRestante) return;
+  const diff=parseInt(expira)-Date.now();
+  if(diff<=0){ tempoRestante.innerText="Expirado"; return; }
+  const horas=Math.floor(diff/3600000);
+  const minutos=Math.floor((diff%3600000)/60000);
+  const segundos=Math.floor((diff%60000)/1000);
+  tempoRestante.innerText=`${horas}h ${minutos}min ${segundos}s restantes`;
+}
+
+// Fundo animado
+particlesJS('particles-js',{
+  particles:{
+    number:{value:90},
+    color:{value:"#0000FF"},
+    shape:{type:"circle"},
+    opacity:{value:0.4},
+    size:{value:3},
+    line_linked:{enable:true,distance:200,color:"#ffffff",opacity:0.5,width:1},
+    move:{enable:true,speed:3}
+  },
+  interactivity:{
+    detect_on:"canvas",
+    events:{onhover:{enable:true,mode:"grab"},onclick:{enable:false}}
+  },
+  retina_detect:true
+});
+
+// Checkboxes funcionais
+const auxilioCheckbox = document.getElementById('auxilioCheckbox');
+const precisaoCheckbox = document.getElementById('precisaoCheckbox');
+
+auxilioCheckbox.addEventListener('change', () => {
+  if(auxilioCheckbox.checked){ alert("Auxílio ATIVADO"); console.log("Auxílio ATIVADO"); }
+  else{ alert("Auxílio DESATIVADO"); console.log("Auxílio DESATIVADO"); }
+});
+
+precisaoCheckbox.addEventListener('change', () => {
+  if(precisaoCheckbox.checked){ alert("Precisão ATIVADA"); console.log("Precisão ATIVADA"); }
+  else{ alert("Precisão DESATIVADA"); console.log("Precisão DESATIVADA"); }
+});
+
+// Color Picker
+const pickr=Pickr.create({
+  el:'#color-picker',
+  theme:'classic',
+  default:'#1a1a1f',
+  swatches:['#1a1a1f','#0a0a0f','#ff0000','#00ff00','#0000ff','#ffff00','#00ffff','#ff00ff'],
+  components:{preview:true,opacity:true,hue:true,interaction:{hex:true,rgba:true,input:true,save:true}}
+});
+const painel=document.querySelector('.painel');
+const preview=document.getElementById('preview');
+pickr.on('change',color=>{const c=color.toHEXA().toString(); painel.style.background=c; preview.style.background=c;});
+</script>
+</body>
+</html>
